@@ -152,7 +152,7 @@ class Generator {
     );
 
     // Insert source image into bigger one
-    drawImage(
+    compositeImage(
       biggerImage,
       image,
       dstX: 0,
@@ -855,50 +855,4 @@ class Generator {
     return bytes;
   }
   // ************************ (end) Internal command generators ************************
-}
-
-// Copied from 3.3.0 (lib/src/draw/draw_image.dart)
-Image drawImage(
-  Image dst,
-  Image src, {
-  int? dstX,
-  int? dstY,
-  int? dstW,
-  int? dstH,
-  int? srcX,
-  int? srcY,
-  int? srcW,
-  int? srcH,
-  bool blend = true,
-}) {
-  dstX ??= 0;
-  dstY ??= 0;
-  srcX ??= 0;
-  srcY ??= 0;
-  srcW ??= src.width;
-  srcH ??= src.height;
-  dstW ??= (dst.width < src.width) ? dstW = dst.width : src.width;
-  dstH ??= (dst.height < src.height) ? dst.height : src.height;
-
-  if (blend) {
-    for (var y = 0; y < dstH; ++y) {
-      for (var x = 0; x < dstW; ++x) {
-        final stepX = (x * (srcW / dstW)).toInt();
-        final stepY = (y * (srcH / dstH)).toInt();
-        final srcPixel = src.getPixel(srcX + stepX, srcY + stepY);
-        drawPixel(dst, dstX + x, dstY + y, srcPixel);
-      }
-    }
-  } else {
-    for (var y = 0; y < dstH; ++y) {
-      for (var x = 0; x < dstW; ++x) {
-        final stepX = (x * (srcW / dstW)).toInt();
-        final stepY = (y * (srcH / dstH)).toInt();
-        final srcPixel = src.getPixel(srcX + stepX, srcY + stepY);
-        dst.setPixel(dstX + x, dstY + y, srcPixel);
-      }
-    }
-  }
-
-  return dst;
 }
