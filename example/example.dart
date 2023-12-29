@@ -71,4 +71,5 @@ Future<void> main() async {
 
   bytes += generator.feed(2);
   bytes += generator.cut();
+  print(bytes);
 }
